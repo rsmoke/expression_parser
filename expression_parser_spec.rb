@@ -1,80 +1,53 @@
-# frozen_string_literal: true
-
 require 'rspec'
+require_relative 'expression_parser'
 
-class Expression
-  attr_reader :root, :left_child, :right_child
-
-  def parse(expression)
-    @root = '*'
-    if explicit_multiplication?(expression)
-      parse_explicit_multiplication(expression)
-    else
-      parse_implicit_multiplication(expression)
+RSpec.describe ExpressionParser do
+  context 'the expression involves explicit multiplication operator 2*x' do
+    it 'returns with root *' do
+      expression = ExpressionParser.parse('2*X')
+      expect(expression.root).to eq('*')
+    end
+    it 'returns with left child 2' do
+      expression = ExpressionParser.parse('2*X')
+      expect(expression.left_child).to eq('2')
+    end
+    it 'returns with right child X' do
+      expression = ExpressionParser.parse('2*X')
+      expect(expression.right_child).to eq('X')
     end
   end
-
-  private
-
-  def explicit_multiplication?(expression)
-    expression.include?('*')
-  end
-
-  def parse_explicit_multiplication(expression)
-    @left_child, @right_child = expression.split('*')
-  end
-
-  def parse_implicit_multiplication(expression)
-    index = expression.index(/[a-zA-Z]/)
-    @left_child = expression[0...index]
-    @right_child = expression[index..]
-  end
-end
-
-RSpec.describe 'expression parser' do
-  context 'When the expression involves explicit multiplication operator' do
-    it 'assigns the multiplication operator * to root' do
-      expression = Expression.new
-      expression.parse('2*x')
-      root = expression.root
-      expect(root).to eq('*')
+  context 'the expression involves implicit multiplication operator 2x' do
+    it 'returns with root *' do
+      expression = ExpressionParser.parse('2X')
+      expect(expression.root).to eq('*')
     end
-
-    it 'assigns the first operand to left child' do
-      expression = Expression.new
-      expression.parse('2*x')
-      left_child = expression.left_child
-      expect(left_child).to eq('2')
+    it 'returns with left child 2' do
+      expression = ExpressionParser.parse('2X')
+      expect(expression.left_child).to eq('2')
     end
-
-    it 'assigns the second operand to right child' do
-      expression = Expression.new
-      expression.parse('2*x')
-      right_child = expression.right_child
-      expect(right_child).to eq('x')
+    it 'returns with right child X' do
+      expression = ExpressionParser.parse('2X')
+      expect(expression.right_child).to eq('X')
     end
   end
-
-  context 'When the expression involves implicit multiplication operator' do
-    it 'assigns the multiplication operator * to root' do
-      expression = Expression.new
-      expression.parse('2x')
-      root = expression.root
-      expect(root).to eq('*')
+  context 'the expression involves explicit addition operator 2+x' do
+    it 'returns with root +' do
+      expression = ExpressionParser.parse('2+X')
+      expect(expression.root).to eq('+')
     end
-
-    it 'assigns the first operand to left child' do
-      expression = Expression.new
-      expression.parse('2x')
-      left_child = expression.left_child
-      expect(left_child).to eq('2')
+    it 'returns with left child 2' do
+      expression = ExpressionParser.parse('2+X')
+      expect(expression.left_child).to eq('2')
     end
-
-    it 'assigns the second operand to right child' do
-      expression = Expression.new
-      expression.parse('2x')
-      right_child = expression.right_child
-      expect(right_child).to eq('x')
+    it 'returns with right child X' do
+      expression = ExpressionParser.parse('2+X')
+      expect(expression.right_child).to eq('X')
+    end
+  end
+  context 'the expression is a constant' do
+    it 'returns the constant as root' do
+      expression = ExpressionParser.parse('2')
+      expect(expression.root).to eq('2')
     end
   end
 end
