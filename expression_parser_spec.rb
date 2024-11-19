@@ -50,4 +50,14 @@ RSpec.describe ExpressionParser do
       expect(expression.root).to eq('2')
     end
   end
+  context 'the expression involves multiple operators' do
+    it 'returns the expression as a tree  ( + *)' do
+      expression = ExpressionParser.parse('2+3*X')
+      expect(expression.root).to eq('+')
+    end
+    it 'returns the expression as a tree  ( * + )' do
+      expression = ExpressionParser.parse('2*3+X')
+      expect(expression.root).to eq('+')
+    end
+  end
 end
