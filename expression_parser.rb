@@ -7,7 +7,12 @@ class ExpressionParser
                                 left_child: nil,
                                 right_child: nil)
     end
-    operators = ['*', '/', '+', '-', '^']
+    if expression.include?('+')
+      return ExpressionTree.new(root: '+',
+                                left_child: expression.split('+')[0],
+                                right_child: expression.split('+')[1])
+    end
+    operators = ['/', '*', '-', '^']
     if operators.any? { |op| expression.include?(op) }
       return ExpressionTree.new(root: expression[1],
                                 left_child: expression[0],
