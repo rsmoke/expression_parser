@@ -1,6 +1,7 @@
 # Expression Parser
 
 A Ruby library for parsing mathematical expressions into abstract syntax trees (AST). This library handles both explicit and implicit multiplication, addition, and supports constants and variables.
+From chapter two of Jason Swett's Professional Rails Testing book.
 
 ## Features
 
