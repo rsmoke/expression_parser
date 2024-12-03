@@ -19,7 +19,6 @@ class ExpressionParser
               )
     end
 
-
     # explicit other operations node
     operators = ['/', '*', '-', '^']
     if operators.any? { |op| expression.include?(op) }
