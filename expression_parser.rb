@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require_relative 'expression_tree'
 
+# Parses mathematical expressions into expression trees
 class ExpressionParser
   def self.parse(expression)
     # constant or variable node
@@ -48,5 +51,4 @@ class ExpressionParser
   def self.right_operand(expression, operator)
     expression.split(operator).last
   end
-
 end
