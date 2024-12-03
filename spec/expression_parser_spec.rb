@@ -1,5 +1,5 @@
 require 'rspec'
-require_relative 'expression_parser'
+require_relative '../expression_parser'
 
 RSpec.describe ExpressionParser do
   context 'the expression involves explicit multiplication operator 2*x' do
