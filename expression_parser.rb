@@ -18,12 +18,10 @@ class ExpressionParser
       return ExpressionTree.new(root: '+',
                                   left_child: ExpressionTree.new(
                                     root: whats_to_the_left_of_the(expression, '+'),
-                                    left_child: nil,
-                                    right_child: nil),
+                                    ),
                                   right_child: ExpressionTree.new(
                                     root: whats_to_the_right_of_the(expression, '+'),
-                                    left_child: nil,
-                                    right_child: nil))
+                                    ))
     end
 
 
