@@ -4,9 +4,7 @@ class ExpressionParser
   def self.parse(expression)
     # constant or variable node
     if constant?(expression) || variable?(expression)
-      return ExpressionTree.new(root: expression,
-                                left_child: nil,
-                                right_child: nil)
+      return ExpressionTree.new(root: expression)
     end
     # 4x + 2y
     # left_child: whats to the left of the +
@@ -16,12 +14,9 @@ class ExpressionParser
     if expression.include?('+')
 
       return ExpressionTree.new(root: '+',
-                                  left_child: ExpressionTree.new(
-                                    root: whats_to_the_left_of_the(expression, '+'),
-                                    ),
-                                  right_child: ExpressionTree.new(
-                                    root: whats_to_the_right_of_the(expression, '+'),
-                                    ))
+              left_child: ExpressionTree.new(root: left_operand(expression, '+')),
+              right_child: ExpressionTree.new(root: right_operand(expression, '+'))
+              )
     end
 
 
@@ -47,11 +42,11 @@ class ExpressionParser
     expression.match?(/^[A-Za-z]+$/)
   end
 
-  def self.whats_to_the_left_of_the(expression, operator)
+  def self.left_operand(expression, operator)
     expression.split(operator).first
   end
 
-  def self.whats_to_the_right_of_the(expression, operator)
+  def self.right_operand(expression, operator)
     expression.split(operator).last
   end
 
