@@ -12,16 +12,16 @@ class ExpressionParser
 
     # explicit addition node
     if expression.include?('+')
-
-      return ExpressionTree.new(root: '+',
-              left_child: ExpressionTree.new(root: left_operand(expression, '+')),
-              right_child: ExpressionTree.new(root: right_operand(expression, '+'))
-              )
+      return ExpressionTree.new(
+        root: '+',
+        left_child: ExpressionTree.new(root: left_operand(expression, '+')),
+        right_child: ExpressionTree.new(root: right_operand(expression, '+'))
+      )
     end
 
     # explicit other operations node
     operators = ['/', '*', '-', '^']
-    if operators.any? { |op| expression.include?(op) }
+    if operators.any? { |operator| expression.include?(operator) }
       return ExpressionTree.new(root: expression[1],
                                 left_child: expression[0],
                                 right_child: expression[2])
