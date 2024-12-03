@@ -14,10 +14,18 @@ class ExpressionParser
 
     # explicit addition node
     if expression.include?('+')
+
       return ExpressionTree.new(root: '+',
-                                left_child: whats_to_the_left_of_the(expression, '+'),
-                                right_child: whats_to_the_right_of_the(expression, '+'))
+                                  left_child: ExpressionTree.new(
+                                    root: whats_to_the_left_of_the(expression, '+'),
+                                    left_child: nil,
+                                    right_child: nil),
+                                  right_child: ExpressionTree.new(
+                                    root: whats_to_the_right_of_the(expression, '+'),
+                                    left_child: nil,
+                                    right_child: nil))
     end
+
 
     # explicit other operations node
     operators = ['/', '*', '-', '^']
@@ -42,14 +50,11 @@ class ExpressionParser
   end
 
   def self.whats_to_the_left_of_the(expression, operator)
-    ExpressionTree.new(root: expression.split(operator).first,
-                       left_child: nil,
-                       right_child: nil)
+    expression.split(operator).first
   end
 
   def self.whats_to_the_right_of_the(expression, operator)
-    ExpressionTree.new(root: expression.split(operator).last,
-                       left_child: nil,
-                       right_child: nil)
+    expression.split(operator).last
   end
+
 end
