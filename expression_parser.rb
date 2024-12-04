@@ -10,22 +10,13 @@ class ExpressionParser
       return ExpressionTree.new(root: expression)
     end
 
-    # explicit addition node
-    if expression.include?('+')
-      return ExpressionTree.new(
-        root: '+',
-        left_child: ExpressionTree.new(root: left_operand(expression, '+')),
-        right_child: ExpressionTree.new(root: right_operand(expression, '+'))
-      )
-    end
-
     # explicit other operations node
-    operators = ['/', '*', '-', '^']
-    if operators.any? { |operator| expression.include?(operator) }
-      operator = expression[1]
-      return ExpressionTree.new(root: operator,
-                                left_child: ExpressionTree.new(root: left_operand(expression, operator)),
-                                right_child: ExpressionTree.new(root: right_operand(expression, operator)))
+    ['+','/', '*', '-', '^'].each do |operator|
+      if expression.include?(operator)
+        return ExpressionTree.new(root: operator,
+                                  left_child: ExpressionTree.new(root: left_operand(expression, operator)),
+                                  right_child: ExpressionTree.new(root: right_operand(expression, operator)))
+      end
     end
 
     # implicit multiplication node
