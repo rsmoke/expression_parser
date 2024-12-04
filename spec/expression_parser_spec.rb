@@ -11,11 +11,11 @@ RSpec.describe ExpressionParser do
     end
     it 'returns with left child 2' do
       expression = ExpressionParser.parse('2*X')
-      expect(expression.left_child).to eq('2')
+      expect(expression.left_child.root).to eq('2')
     end
     it 'returns with right child X' do
       expression = ExpressionParser.parse('2*X')
-      expect(expression.right_child).to eq('X')
+      expect(expression.right_child.root).to eq('X')
     end
   end
   context 'the expression involves implicit multiplication operator 2x' do
@@ -81,4 +81,3 @@ RSpec.describe ExpressionParser do
     end
   end
 end
-

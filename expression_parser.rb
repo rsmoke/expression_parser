@@ -22,9 +22,10 @@ class ExpressionParser
     # explicit other operations node
     operators = ['/', '*', '-', '^']
     if operators.any? { |operator| expression.include?(operator) }
-      return ExpressionTree.new(root: expression[1],
-                                left_child: expression[0],
-                                right_child: expression[2])
+      operator = expression[1]
+      return ExpressionTree.new(root: operator,
+                                left_child: ExpressionTree.new(root: left_operand(expression, operator)),
+                                right_child: ExpressionTree.new(root: right_operand(expression, operator)))
     end
 
     # implicit multiplication node
