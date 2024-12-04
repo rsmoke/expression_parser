@@ -14,8 +14,8 @@ class ExpressionParser
     ['+','/', '*', '-', '^'].each do |operator|
       if expression.include?(operator)
         return ExpressionTree.new(root: operator,
-                                  left_child: ExpressionTree.new(root: left_operand(expression, operator)),
-                                  right_child: ExpressionTree.new(root: right_operand(expression, operator)))
+                                  left_child: left_operand_tree(expression, operator),
+                                  right_child: right_operand_tree(expression, operator))
       end
     end
 
@@ -25,6 +25,7 @@ class ExpressionParser
                        right_child: expression[1])
   end
 
+  private
   def self.constant?(expression)
     expression.match?(/^\d+$/)
   end
@@ -33,11 +34,19 @@ class ExpressionParser
     expression.match?(/^[A-Za-z]+$/)
   end
 
-  def self.left_operand(expression, operator)
-    expression.split(operator).first
+  def self.left_operand_tree(expression, operator)
+    ExpressionTree.new(root: expression.split(operator).first)
   end
 
-  def self.right_operand(expression, operator)
-    expression.split(operator).last
+  def self.right_operand_tree(expression, operator)
+    ExpressionTree.new(root: expression.split(operator).last)
   end
+
+#   BODMAS
+# B: Brackets
+# O: Order (powers or roots)
+# D: Division
+# M: Multiplication
+# A: Addition
+# S: Subtraction
 end
