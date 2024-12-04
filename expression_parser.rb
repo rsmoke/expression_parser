@@ -9,9 +9,6 @@ class ExpressionParser
     if constant?(expression) || variable?(expression)
       return ExpressionTree.new(root: expression)
     end
-    # 4x + 2y
-    # left_child: whats to the left of the +
-    # right_child: whats to the right of the +
 
     # explicit addition node
     if expression.include?('+')
